@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-flash.css" rel="stylesheet">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Bungee Shade:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|LXGW WenKai Screen:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="使用github自动部署博客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo+github-action工作流完成博客的自动部署与源代码备份">
+<meta property="og:url" content="http://example.com/2024/06/20/hexo-github-action%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%AE%8C%E6%88%90%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%BA%90%E4%BB%A3%E7%A0%81%E5%A4%87%E4%BB%BD/index.html">
+<meta property="og:site_name" content="wilfredzoz">
+<meta property="og:description" content="使用github自动部署博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-20T15:12:50.000Z">
+<meta property="article:modified_time" content="2024-11-13T06:22:24.694Z">
+<meta property="article:author" content="wilfred">
+<meta property="article:tag" content="github工作流">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/06/20/hexo-github-action%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%AE%8C%E6%88%90%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%BA%90%E4%BB%A3%E7%A0%81%E5%A4%87%E4%BB%BD/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>hexo+github-action工作流完成博客的自动部署与源代码备份 | wilfredzoz</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+  
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">wilfredzoz</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-hashtag fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-folder-open fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-list fa-fw"></i>全部</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/20/hexo-github-action%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%AE%8C%E6%88%90%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%BA%90%E4%BB%A3%E7%A0%81%E5%A4%87%E4%BB%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wilfred">
+      <meta itemprop="description" content="LML">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wilfredzoz">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          hexo+github-action工作流完成博客的自动部署与源代码备份
+        </h1>
+
+        <div class="post-meta">
+		  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-06-20 15:12:50" itemprop="dateCreated datePublished" datetime="2024-06-20T15:12:50+00:00">2024-06-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-13 06:22:24" itemprop="dateModified" datetime="2024-11-13T06:22:24+00:00">2024-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">使用github自动部署博客</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在搭建好个人博客之后，当然希望能够随时对自己的博客源代码进行备份，这是马上就会想到能否用github进备份，因为源代码文件多，但是大小都不大。但还有另外一个问题，也就是hexo的静态文件生成的问题，随着博客文件的增多，hexo每次进行<code>hexo g</code>的时候，都会生成大量的静态文件，生成的时间也会越来越久。</p>
+<p>githun
+action提供了一种新的选择，它可以在对文件进行备份的时候，同时进行自动部署。由于github的文件上传只会对有更变的文件进行，所以生成静态文件这一步就不必操心。</p>
+<p>当备份完文件之后，github
+action可以自动在远程运行我们设置好的工作流，像分布式一样在远程端进行静态文件的生成，并把这些文件推送至github
+pages所连接的资料库，生成博客，不需要再本地进行运行。具体的步骤如下：</p>
+<p>（<code>mermaid</code>的显示需要再本地安装进行<code>npm install hexo-filter-mermaid-diagrams --save</code>）</p>
+<pre class="mermaid">flowchart LR
+        A["上传博客更新文件至github的博</br>客源代码库"] -->|"触发工作流，生成静态文件上传至</br>连接GitHub pages的库（username.github.io）"|B(博客更新)</pre>
+<p>在Blog根目录打开<code>git bash</code>，删除<code>H:\Blog\themes\使用的主题</code>中的<code>.git</code>文件</p>
+<span id="more"></span>
+<h2 id="初始化本地仓库">初始化本地仓库</h2>
+<p>输入：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+<p>输入github用户名和邮箱：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --<span class="variable language_">global</span> user.<span class="property">name</span> <span class="string">&quot;Your Name&quot;</span></span><br><span class="line">git config --<span class="variable language_">global</span> user.<span class="property">email</span> <span class="string">&quot;youremail@yourdomain.com&quot;</span></span><br></pre></td></tr></table></figure>
+<p>使用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;你的邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="生成密钥">生成密钥</h2>
+<p>密钥在<code>C:\User\xxx.ssh\</code>
+这个文件夹中。xxx是你的windows用户名。其中<code>id_rsa.pub</code>为公钥，<code>id_rsa</code>为私钥</p>
+<p>将公钥中的内容复制到github网站的<code>settings</code>-<code>SSH and GPG keys</code>-<code>New SSH key</code></p>
+<p>检查git是否与github通过SSH连接</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.<span class="property">com</span></span><br></pre></td></tr></table></figure>
+<p>若出现<code>successfully</code>的字样，表示连接成功</p>
+<h2
+id="创建存放博客源文件的私有仓库要开启工作流和资料库等选项">创建存放博客源文件的私有仓库（要开启工作流和资料库等选项）</h2>
+<h2 id="将本地仓与私有仓连接">将本地仓与私有仓连接</h2>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin 远程仓库的<span class="variable constant_">SSH</span>地址</span><br><span class="line"># git remote add origin git@github.<span class="property">com</span>:username/reponame.<span class="property">git</span></span><br></pre></td></tr></table></figure>
+<h2 id="从远程仓管获得最新更改">从远程仓管获得最新更改</h2>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin main</span><br></pre></td></tr></table></figure>
+<p>如果出现不相关历史的错误提示，您可以使用以下命令来解决：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin main --allow-unrelated-histories</span><br></pre></td></tr></table></figure>
+<p>多<code>pull</code>几次直至出现<code>Already up to date</code>的字样</p>
+<h2 id="添加文件到暂存区">添加文件到暂存区</h2>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
+<h2 id="提交更改">提交更改</h2>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;提交的注释&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="上传项目">上传项目</h2>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin main</span><br></pre></td></tr></table></figure>
+<p>注意上面的<code>main</code>是根据github私有库中的默认分支名来走的，如果添加了README.md文件，那么默认会变成<code>main</code>，也有可能是<code>master</code>需要自己去查看</p>
+<p><img
+src="https://raw.gitmirror.com/wilfredzoz/Picture/master/2024年06月20日16时02分56秒-image-20240620160249708.png" /></p>
+<p>查看github私有库，成功的话文件应该在里面了</p>
+<p>在github中生成一个<code>token</code>，将<code>token</code>加入源代码私有仓库和连接GitHub
+pages的仓库,命名为<code>GH_TOKEN</code></p>
+<p>在Blog根目录新建<code>.github</code>文件夹，在文件夹中新建<code>workflows</code>文件夹，在<code>workflows</code>文件夹中新建<code>deploy.yml</code>文件</p>
+<p>（若已存在<code>.github</code>文件夹，那么只需执行后面的操作）</p>
+<p>在<code>deploy.yml</code>文件中写入以下内容：</p>
+<p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name</span>: <span class="title class_">Deploy</span> <span class="title class_">Hexo</span> to <span class="title class_">GitHub</span> <span class="title class_">Pages</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on</span>:</span><br><span class="line">  <span class="attr">push</span>:</span><br><span class="line">    <span class="attr">branches</span>:</span><br><span class="line">      - main  # 当推送到 main 分支时触发</span><br><span class="line"></span><br><span class="line"><span class="attr">jobs</span>:</span><br><span class="line">  <span class="attr">build</span>:</span><br><span class="line">    runs-<span class="attr">on</span>: ubuntu-latest</span><br><span class="line"></span><br><span class="line">    <span class="attr">steps</span>:</span><br><span class="line">      - <span class="attr">name</span>: <span class="title class_">Checkout</span> repository</span><br><span class="line">        <span class="attr">uses</span>: actions/checkout@v2</span><br><span class="line">        <span class="attr">with</span>:</span><br><span class="line">          <span class="attr">submodules</span>: <span class="literal">false</span>  # 禁用子模块检查</span><br><span class="line"></span><br><span class="line">      - <span class="attr">name</span>: <span class="title class_">Setup</span> <span class="title class_">Node</span>.<span class="property">js</span></span><br><span class="line">        <span class="attr">uses</span>: actions/setup-node@v2</span><br><span class="line">        <span class="attr">with</span>:</span><br><span class="line">          node-<span class="attr">version</span>: <span class="string">&#x27;20&#x27;</span></span><br><span class="line"></span><br><span class="line">      - <span class="attr">name</span>: <span class="title class_">Install</span> <span class="title class_">Dependencies</span></span><br><span class="line">        <span class="attr">run</span>: npm install</span><br><span class="line">        </span><br><span class="line">        # <span class="title class_">Install</span> pandoc <span class="keyword">for</span> mathjax (<span class="title class_">Optional</span>)</span><br><span class="line">      - <span class="attr">name</span>: <span class="title class_">Install</span> pandoc</span><br><span class="line">        <span class="attr">run</span>: |</span><br><span class="line">          wget -c <span class="attr">https</span>:<span class="comment">//github.com/jgm/pandoc/releases/download/3.2/pandoc-3.2-1-amd64.deb</span></span><br><span class="line">          sudo dpkg -i pandoc-<span class="number">3.2</span>-<span class="number">1</span>-amd64.<span class="property">deb</span></span><br><span class="line">          </span><br><span class="line">      - <span class="attr">name</span>: <span class="title class_">Install</span> <span class="title class_">Hexo</span> <span class="title class_">Git</span> <span class="title class_">Deployer</span></span><br><span class="line">        <span class="attr">run</span>: |</span><br><span class="line">          npm install hexo-deployer-git --save</span><br><span class="line">          npm install hexo-cli -g</span><br><span class="line"></span><br><span class="line">      - <span class="attr">name</span>: <span class="title class_">Clean</span> and <span class="title class_">Generate</span> <span class="title class_">Static</span> <span class="title class_">Files</span></span><br><span class="line">        <span class="attr">run</span>: |</span><br><span class="line">          hexo clean</span><br><span class="line">          hexo generate</span><br><span class="line"></span><br><span class="line">      - <span class="attr">name</span>: <span class="title class_">Configure</span> <span class="title class_">Git</span></span><br><span class="line">        <span class="attr">run</span>: |</span><br><span class="line">          git config --<span class="variable language_">global</span> user.<span class="property">name</span> <span class="string">&#x27;github-actions[bot]&#x27;</span></span><br><span class="line">          git config --<span class="variable language_">global</span> user.<span class="property">email</span> <span class="string">&#x27;github-actions[bot]@users.noreply.github.com&#x27;</span></span><br><span class="line"></span><br><span class="line">      - <span class="attr">name</span>: <span class="title class_">Deploy</span> to <span class="title class_">GitHub</span> <span class="title class_">Pages</span></span><br><span class="line">        <span class="attr">env</span>:</span><br><span class="line">          <span class="attr">GH_TOKEN</span>: $&#123;&#123; secrets.<span class="property">GH_TOKEN</span> &#125;&#125;</span><br><span class="line">        <span class="attr">run</span>: |</span><br><span class="line">          cd public/</span><br><span class="line">          git init</span><br><span class="line">          git add -A</span><br><span class="line">          git commit -m <span class="string">&quot;Create by workflows&quot;</span></span><br><span class="line">          git remote add origin <span class="attr">https</span>:<span class="comment">//$&#123;&#123; secrets.GH_TOKEN &#125;&#125;@github.com/wilfredzoz/wilfredzoz.github.io.git</span></span><br><span class="line">          git push origin <span class="attr">HEAD</span>:master -f</span><br><span class="line">          </span><br></pre></td></tr></table></figure></p>
+<p>​</p>
+<p>注意：</p>
+<p><code>node-version</code>可以在<code>git bash</code>中输入<code>node -v</code>查看，只用输入大版本数字</p>
+<p><code>Install pandoc for mathjax</code>是为需要<code>mathjax</code>包所准备的因为服务器需要下载这些包才能生成静态文件进行推送，这里<code>pandoc</code>的版本需要与本地博客中<code>pandoc</code>版本一致</p>
+<p><code>GH_TOKEN</code>为之前设置的两个资料库的<code>Token</code>名</p>
+<p>工作流最后<code>Deploy to GitHub Pages</code>的作用就是，将源代码资料库中，通过工作流生成的静态文件推送到连接到博客的公开资料库中，注意最后<code>git push origin HEAD:master -f</code>中的分支名称要和公开资料库（github
+pages）中的分支名称相同。</p>
+<p>对博客使用hexo命令进行修改之后，需要上传文件只需分别输入：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;注释&quot;</span></span><br><span class="line">git push origin main</span><br></pre></td></tr></table></figure>
+<p>就能让本地库的文件上传至源代码私有库，触发工作流进行：</p>
+<figure>
+<img
+src="https://raw.gitmirror.com/wilfredzoz/Picture/master/2024年06月20日16时43分08秒-image-20240620164307944.png"
+alt="image-20240620164307944" />
+<figcaption aria-hidden="true">image-20240620164307944</figcaption>
+</figure>
+<figure>
+<img
+src="https://raw.gitmirror.com/wilfredzoz/Picture/master/2024年06月20日16时43分22秒-image-20240620164322260.png"
+alt="image-20240620164322260" />
+<figcaption aria-hidden="true">image-20240620164322260</figcaption>
+</figure>
+<p>若工作流中的步骤全部完成，通过<code>Deploy to GitHub Pages</code>就会自动上传更新内容至github
+pages的公开库，进行博客的自动部署s</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/github%E5%B7%A5%E4%BD%9C%E6%B5%81/" rel="tag"># github工作流</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/06/19/hexo%E4%B9%8B%E6%96%87%E7%AB%A0%E9%A2%84%E8%A7%88%E8%AE%BE%E7%BD%AE/" rel="prev" title="hexo之文章预览设置">
+      <i class="fa fa-chevron-left"></i> hexo之文章预览设置
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/06/21/Python%E7%AC%94%E8%AE%B0/" rel="next" title="Python笔记">
+      Python笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          目录
+        </li>
+        <li class="sidebar-nav-overview">
+          概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93"><span class="nav-number">1.</span> <span class="nav-text">初始化本地仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%AF%86%E9%92%A5"><span class="nav-number">2.</span> <span class="nav-text">生成密钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%AD%98%E6%94%BE%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6%E7%9A%84%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93%E8%A6%81%E5%BC%80%E5%90%AF%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%92%8C%E8%B5%84%E6%96%99%E5%BA%93%E7%AD%89%E9%80%89%E9%A1%B9"><span class="nav-number">3.</span> <span class="nav-text">创建存放博客源文件的私有仓库（要开启工作流和资料库等选项）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86%E6%9C%AC%E5%9C%B0%E4%BB%93%E4%B8%8E%E7%A7%81%E6%9C%89%E4%BB%93%E8%BF%9E%E6%8E%A5"><span class="nav-number">4.</span> <span class="nav-text">将本地仓与私有仓连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E8%BF%9C%E7%A8%8B%E4%BB%93%E7%AE%A1%E8%8E%B7%E5%BE%97%E6%9C%80%E6%96%B0%E6%9B%B4%E6%94%B9"><span class="nav-number">5.</span> <span class="nav-text">从远程仓管获得最新更改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%96%87%E4%BB%B6%E5%88%B0%E6%9A%82%E5%AD%98%E5%8C%BA"><span class="nav-number">6.</span> <span class="nav-text">添加文件到暂存区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E6%9B%B4%E6%94%B9"><span class="nav-number">7.</span> <span class="nav-text">提交更改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E9%A1%B9%E7%9B%AE"><span class="nav-number">8.</span> <span class="nav-text">上传项目</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">wilfred</p>
+  <div class="site-description" itemprop="description">LML</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">全部</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-gamepad"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wilfred</span>
+</div>
+<!--  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div> 
+-->
+
+
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+
+
+  
+  <style>
+  
+  button.darkmode-toggle {
+  z-index: 9999;
+  }
+  
+  img, .darkmode-ignore {
+    isolation: isolate;
+    display: block;
+  }
+  </style>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/js/medium-zoom.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+  <script src="/js/darkmode-js.min.js"></script>
+
+
+<script>
+var options = {
+  bottom: '64px', // default: '32px'
+  right: 'unset', // default: '32px'
+  left: '32px', // default: 'unset'
+  time: '0.5s', // default: '0.3s'
+  mixColor: '#fff', // default: '#fff'
+  backgroundColor: '#fff',  // default: '#fff'
+  buttonColorDark: '#100f2c',  // default: '#100f2c'
+  buttonColorLight: '#fff', // default: '#fff'
+  saveInCookies: true, // default: true,
+  label: '🌓', // default: ''
+  autoMatchOsTheme: true // default: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+// window.onload = function(){
+//   setTimeout(
+//     function() {
+//       document.getElementsByClassName('darkmode-toggle')[0].click();
+//     },
+//     550,
+//   );
+//   document.getElementsByClassName('darkmode-toggle')[0].click();
+// }
+</script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('/js/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'default',
+      logLevel : 3,
+      flowchart: { curve     : 'linear'},
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+  <script src="/js/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://example.com/2024/06/20/hexo-github-action%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%AE%8C%E6%88%90%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%BA%90%E4%BB%A3%E7%A0%81%E5%A4%87%E4%BB%BD/',]
+      });
+      });
+  </script>
+
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 2,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var a=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,d=o();function o(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(t){(a||t)&&(d=o());for(var e,i=0;i<d.length;i++)0<=(e=(e=d[i]).getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,a,n,o=d[i];e=function(){d=d.filter(function(t){return o!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(o)},(t=o).dataset.loaded||(t.hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(a=new Image,n=t.getAttribute("data-original"),a.onload=function(){t.src=n,t.removeAttribute("data-original"),t.setAttribute("data-loaded",!0),e&&e()},a.onerror=function(){t.removeAttribute("data-original"),t.setAttribute("data-loaded",!1),t.src=n},t.src!==n&&(a.src=n)))}()}function e(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",e),r.addEventListener("resize",e),r.addEventListener("orientationchange",e)}(this);</script></body>
+</html>
