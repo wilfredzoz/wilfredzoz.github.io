@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-flash.css" rel="stylesheet">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Bungee Shade:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|LXGW WenKai Screen:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Note for Statistical learning with Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Statistical learning with Python">
+<meta property="og:url" content="http://example.com/2025/01/15/Statistical-learning-with-Python/index.html">
+<meta property="og:site_name" content="wilfredzoz">
+<meta property="og:description" content="Note for Statistical learning with Python">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wilfredzoz/Picture/2025/01/image-20250115150506998-3c5331.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wilfredzoz/Picture/2025/01/image-20250116145340211-de1554.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wilfredzoz/Picture/2025/01/image-20250116161048304-9fa7bd.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wilfredzoz/Picture/2025/01/image-20250116161644740-e89b08.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wilfredzoz/Picture/2025/01/image-20250117160422457-8cd788.png">
+<meta property="article:published_time" content="2025-01-15T14:24:48.000Z">
+<meta property="article:modified_time" content="2025-01-17T08:09:13.109Z">
+<meta property="article:author" content="wilfred">
+<meta property="article:tag" content="Statistical learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wilfredzoz/Picture/2025/01/image-20250115150506998-3c5331.png">
+
+<link rel="canonical" href="http://example.com/2025/01/15/Statistical-learning-with-Python/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Statistical learning with Python | wilfredzoz</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+  
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">wilfredzoz</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-hashtag fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-folder-open fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-list fa-fw"></i>全部</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/15/Statistical-learning-with-Python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wilfred">
+      <meta itemprop="description" content="LML">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wilfredzoz">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Statistical learning with Python
+        </h1>
+
+        <div class="post-meta">
+		  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-01-15 14:24:48" itemprop="dateCreated datePublished" datetime="2025-01-15T14:24:48+00:00">2025-01-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-01-17 08:09:13" itemprop="dateModified" datetime="2025-01-17T08:09:13+00:00">2025-01-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Statistical-learning/" itemprop="url" rel="index"><span itemprop="name">Statistical learning</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">Note for Statistical learning with Python</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="introduction-to-regression-models">Introduction to Regression
+Models</h1>
+我们输入的向量由各个特征$ X_{i}<span
+class="math inline">\(组成\)</span>$ X=
+<span class="math display">\[\begin{bmatrix}
+X_{1}\\
+X_{2}\\
+X_{3}
+
+\end{bmatrix}\]</span>
+<p>$$ 现在我们的模型可以写成<span class="math inline">\(Y =
+f(x)+\epsilon\)</span></p>
+<p><span
+class="math inline">\(f(x)\)</span>永远不可能完美的拟合Y，总会有一些误差，这些总的误差我们用<span
+class="math inline">\(\epsilon\)</span>来表示</p>
+<p>在一个散点图中我们要计算<span
+class="math inline">\(f(4)\)</span>，即在<span class="math inline">\(X =
+4\)</span>的情况下对y进行预测，我们有以下这种预测方式： <span
+class="math display">\[
+f(4) = E(Y|X=4)
+\]</span> <span class="math inline">\(E(Y|X=4)\)</span>即为<span
+class="math inline">\(X = 4\)</span>时所有Y的值的期望</p>
+根据以上的定义，<span class="math inline">\(f(x)\)</span>可写为 $$ f(x)
+= f(x_{1},x_{2},x_{3}) = E(Y|X_{1} = x_{1},X_{2} = x_{2},X_{3} = x_{3}),
+\其中x =
+<span class="math display">\[\begin{bmatrix}
+x_{1}\\
+x_{2}\\
+x_{3}
+
+\end{bmatrix}\]</span>
+<p>$$ 最理想的<span class="math inline">\(f(x)\)</span>即为可以使得<span
+class="math inline">\(E[(Y-g(x))^2|X=x]\)</span>在<span
+class="math inline">\(X=x\)</span>最小的函数<span
+class="math inline">\(g(x)\)</span></p>
+<p><span class="math inline">\(\epsilon=Y-f(x)\)</span>是理想函数<span
+class="math inline">\(f(x)\)</span>依然无法捕捉到的误差。</p>
+<p>对于任何<span class="math inline">\(f(x)\)</span>的估计<span
+class="math inline">\(\hat{f}(x)\)</span>都有： <span
+class="math display">\[
+\begin{eqnarray}    
+E[(Y-\hat{f}(x))^2|X=x]&amp;=&amp;E[(\epsilon+f(x)-\hat{f}(x))^2|X=x]     \\
+&amp;=&amp;E(\epsilon^2|X=x)+2E(\epsilon|X=x)E([f(x)-\hat{f}(x)]|X=x)
++E\{[f(x)-\hat{f}(x)]^2|X=x\}\nonumber    \\
+&amp;\overset{E(\epsilon)=0}{=}&amp;Var(\epsilon|X=x)+E\{[f(x)-\hat{f}(x)]^2|X=x\}
+\end{eqnarray}
+\]</span> 其中<span
+class="math inline">\(Var(\epsilon^2|X=x)\)</span>是不可减小的，但是我们可以通过减小<span
+class="math inline">\(E\{[f(x)-\hat{f}(x)]^2|X=x\}\)</span>来增加预测的准确性</p>
+<p>有时在给定的<span
+class="math inline">\(X=x\)</span>处不能求平均值，比如不存在<span
+class="math inline">\(X=x\)</span>处的某个<span
+class="math inline">\(Y\)</span>值，这时可以放松求均值的区间，来求<span
+class="math inline">\(X=x\)</span>处的条件期望： <span
+class="math display">\[
+\hat{f}(x) = Ave(Y|X \in \mathcal{N}(x)),\\where~ \mathcal{N}(x)
+~is~some~neighborhood~of~x
+\]</span></p>
+<div data-align="center">
+<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDI0IDI0Ij48Y2lyY2xlIGN4PSI0IiBjeT0iMTIiIHI9IjMiIGZpbGw9ImN1cnJlbnRDb2xvciI+PGFuaW1hdGUgaWQ9InN2Z1NwaW5uZXJzM0RvdHNTY2FsZTAiIGF0dHJpYnV0ZU5hbWU9InIiIGJlZ2luPSIwO3N2Z1NwaW5uZXJzM0RvdHNTY2FsZTEuZW5kLTAuMjVzIiBkdXI9IjAuNzVzIiB2YWx1ZXM9IjM7LjI7MyIvPjwvY2lyY2xlPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjMiIGZpbGw9ImN1cnJlbnRDb2xvciI+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0iciIgYmVnaW49InN2Z1NwaW5uZXJzM0RvdHNTY2FsZTAuZW5kLTAuNnMiIGR1cj0iMC43NXMiIHZhbHVlcz0iMzsuMjszIi8+PC9jaXJjbGU+PGNpcmNsZSBjeD0iMjAiIGN5PSIxMiIgcj0iMyIgZmlsbD0iY3VycmVudENvbG9yIj48YW5pbWF0ZSBpZD0ic3ZnU3Bpbm5lcnMzRG90c1NjYWxlMSIgYXR0cmlidXRlTmFtZT0iciIgYmVnaW49InN2Z1NwaW5uZXJzM0RvdHNTY2FsZTAuZW5kLTAuNDVzIiBkdXI9IjAuNzVzIiB2YWx1ZXM9IjM7LjI7MyIvPjwvY2lyY2xlPjwvc3ZnPg==" data-original="https://cdn.jsdelivr.net/gh/wilfredzoz/Picture/2025/01/image-20250115150506998-3c5331.png"  width="75%" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);border-radius:10px;"/>
+</div>
+<p>例如在上图中，在X=4
+这点上没有具体的Y的值，这时候可以放松X=4的条件，以左右两条虚线中的值来代替X=4上的Y的值作为<span
+class="math inline">\(E(Y|X=4)\)</span>.</p>
+<h1 id="dimensionality-and-structured-models">Dimensionality and
+Structured Models</h1>
+<p>当变量的维数较少，样本量较大时，最近邻法的效果不错，但是当维数增多时，最近邻法就不再适用了，这里有一个Curse
+of Dimensionality的说法</p>
+<h2 id="curse-of-dimensionality">Curse of Dimensionality</h2>
+<figure>
+<img
+src="https://cdn.jsdelivr.net/gh/wilfredzoz/Picture/2025/01/image-20250115155341641-de25bf.png"
+alt="image-20250115155341641" />
+<figcaption aria-hidden="true">image-20250115155341641</figcaption>
+</figure>
+<p>图中可以看到。</p>
+<ul>
+<li>要对单一的维度（<span
+class="math inline">\(X_1\)</span>）取10%的最近邻数据做平均，只要取虚线之间的<span
+class="math inline">\(X_1\)</span>数据即可。</li>
+<li>要对两个维度：<span
+class="math inline">\(X_1、X_2\)</span>做最近邻取10%的数据，我们需要在左图的圈中求<span
+class="math inline">\(X_1、X_2\)</span>的平均，可以看到，当维度增加时，需要取数据的空间面积会增大许多。</li>
+<li>右图中表示了当最近邻的取数（Fraction of
+volume）增大时，不同维度下的空间半径的变化情况。当Fraction of
+volume一定时，比如取10%，若此维度为10，那么半径已经超过了1，而每个数据的范围只在[-1,1]，已经取不到所有的数据，所以对于高维数据来说，最近邻法是不适用的</li>
+</ul>
+<h1 id="model-selection-and-bias-variance-trand-off">Model Selection and
+Bias Variance Trand-off</h1>
+<h2 id="measuring-the-quality-of-fit">Measuring the Quality of Fit</h2>
+<p>理想的拟合函数<span class="math inline">\(f(x)\)</span>的估计值<span
+class="math inline">\(\hat{f}(x)\)</span>的好坏，可以用MSE来表示，公式如下
+<span class="math display">\[
+\text{MSE} = \frac{1}{n} \sum_{i=1}^{n}(y_i - \hat{f}(x_i))^2
+\]</span> 这个式子表示了各个真实的点<span
+class="math inline">\((x_i,y_i)\)</span>与估计出的点(<span
+class="math inline">\(x_i,\hat{f}(x_i)\)</span>)的平方差之和</p>
+<p>对于训练集的MSE，即<span
+class="math inline">\(MSE_{tr}\)</span>,我们不是很关心，因为<span
+class="math inline">\(MSE_{tr}\)</span>是用我们已知的数据计算出来的，我们想知道的是使用<span
+class="math inline">\(\hat{f}(x)\)</span>所计算的我们未知的数据时的MSE。比如我们向通过历史的股票数据来预测将来的股票价格一样，我们感兴趣的是将来的股票价格。</p>
+<div data-align="center">
+<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDI0IDI0Ij48Y2lyY2xlIGN4PSI0IiBjeT0iMTIiIHI9IjMiIGZpbGw9ImN1cnJlbnRDb2xvciI+PGFuaW1hdGUgaWQ9InN2Z1NwaW5uZXJzM0RvdHNTY2FsZTAiIGF0dHJpYnV0ZU5hbWU9InIiIGJlZ2luPSIwO3N2Z1NwaW5uZXJzM0RvdHNTY2FsZTEuZW5kLTAuMjVzIiBkdXI9IjAuNzVzIiB2YWx1ZXM9IjM7LjI7MyIvPjwvY2lyY2xlPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjMiIGZpbGw9ImN1cnJlbnRDb2xvciI+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0iciIgYmVnaW49InN2Z1NwaW5uZXJzM0RvdHNTY2FsZTAuZW5kLTAuNnMiIGR1cj0iMC43NXMiIHZhbHVlcz0iMzsuMjszIi8+PC9jaXJjbGU+PGNpcmNsZSBjeD0iMjAiIGN5PSIxMiIgcj0iMyIgZmlsbD0iY3VycmVudENvbG9yIj48YW5pbWF0ZSBpZD0ic3ZnU3Bpbm5lcnMzRG90c1NjYWxlMSIgYXR0cmlidXRlTmFtZT0iciIgYmVnaW49InN2Z1NwaW5uZXJzM0RvdHNTY2FsZTAuZW5kLTAuNDVzIiBkdXI9IjAuNzVzIiB2YWx1ZXM9IjM7LjI7MyIvPjwvY2lyY2xlPjwvc3ZnPg==" data-original="https://cdn.jsdelivr.net/gh/wilfredzoz/Picture/2025/01/image-20250116145340211-de1554.png"  width="75%" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);border-radius:10px;"/>
+</div>
+<p>上图为不同的拟合曲线，和曲线的MSE。左图中黑色为理想的<span
+class="math inline">\(f(x)\)</span>，其余均为拟合的曲线<span
+class="math inline">\(\hat{f}(x_i)\)</span>;右图红色的为曲线的<span
+class="math inline">\(MSE_{te}\)</span>,灰色的为<span
+class="math inline">\(MSE_{tr}\)</span>。</p>
+<p>从图中可以看出随着Flexibility的增加（这里称之为灵活度，和自由度相关，意味着模型中的参数越多），模型的<span
+class="math inline">\(MSE_{tr}\)</span>下降的很快，但这并不代表灵活度越高的模型，或者<span
+class="math inline">\(MSE_{tr}\)</span>越低的模型，他们的拟合效果就越好；从<span
+class="math inline">\(MSE_{te}\)</span>上可以看出，随着自由度的增加，<span
+class="math inline">\(MSE_{te}\)</span>与Flexibility的曲线渐渐变为U字型，意味着灵活度越高的模型在训练集上的表现可能非常优秀，但是在测试集上的表现糟糕。这种情况成为过拟合（overfitting）。</p>
+<div data-align="center">
+<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDI0IDI0Ij48Y2lyY2xlIGN4PSI0IiBjeT0iMTIiIHI9IjMiIGZpbGw9ImN1cnJlbnRDb2xvciI+PGFuaW1hdGUgaWQ9InN2Z1NwaW5uZXJzM0RvdHNTY2FsZTAiIGF0dHJpYnV0ZU5hbWU9InIiIGJlZ2luPSIwO3N2Z1NwaW5uZXJzM0RvdHNTY2FsZTEuZW5kLTAuMjVzIiBkdXI9IjAuNzVzIiB2YWx1ZXM9IjM7LjI7MyIvPjwvY2lyY2xlPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjMiIGZpbGw9ImN1cnJlbnRDb2xvciI+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0iciIgYmVnaW49InN2Z1NwaW5uZXJzM0RvdHNTY2FsZTAuZW5kLTAuNnMiIGR1cj0iMC43NXMiIHZhbHVlcz0iMzsuMjszIi8+PC9jaXJjbGU+PGNpcmNsZSBjeD0iMjAiIGN5PSIxMiIgcj0iMyIgZmlsbD0iY3VycmVudENvbG9yIj48YW5pbWF0ZSBpZD0ic3ZnU3Bpbm5lcnMzRG90c1NjYWxlMSIgYXR0cmlidXRlTmFtZT0iciIgYmVnaW49InN2Z1NwaW5uZXJzM0RvdHNTY2FsZTAuZW5kLTAuNDVzIiBkdXI9IjAuNzVzIiB2YWx1ZXM9IjM7LjI7MyIvPjwvY2lyY2xlPjwvc3ZnPg==" data-original="https://cdn.jsdelivr.net/gh/wilfredzoz/Picture/2025/01/image-20250116161048304-9fa7bd.png"  width="75%" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);border-radius:10px;"/>
+</div>
+<div data-align="center">
+<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDI0IDI0Ij48Y2lyY2xlIGN4PSI0IiBjeT0iMTIiIHI9IjMiIGZpbGw9ImN1cnJlbnRDb2xvciI+PGFuaW1hdGUgaWQ9InN2Z1NwaW5uZXJzM0RvdHNTY2FsZTAiIGF0dHJpYnV0ZU5hbWU9InIiIGJlZ2luPSIwO3N2Z1NwaW5uZXJzM0RvdHNTY2FsZTEuZW5kLTAuMjVzIiBkdXI9IjAuNzVzIiB2YWx1ZXM9IjM7LjI7MyIvPjwvY2lyY2xlPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjMiIGZpbGw9ImN1cnJlbnRDb2xvciI+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0iciIgYmVnaW49InN2Z1NwaW5uZXJzM0RvdHNTY2FsZTAuZW5kLTAuNnMiIGR1cj0iMC43NXMiIHZhbHVlcz0iMzsuMjszIi8+PC9jaXJjbGU+PGNpcmNsZSBjeD0iMjAiIGN5PSIxMiIgcj0iMyIgZmlsbD0iY3VycmVudENvbG9yIj48YW5pbWF0ZSBpZD0ic3ZnU3Bpbm5lcnMzRG90c1NjYWxlMSIgYXR0cmlidXRlTmFtZT0iciIgYmVnaW49InN2Z1NwaW5uZXJzM0RvdHNTY2FsZTAuZW5kLTAuNDVzIiBkdXI9IjAuNzVzIiB2YWx1ZXM9IjM7LjI7MyIvPjwvY2lyY2xlPjwvc3ZnPg==" data-original="https://cdn.jsdelivr.net/gh/wilfredzoz/Picture/2025/01/image-20250116161644740-e89b08.png"  width="75%" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);border-radius:10px;"/>
+</div>
+<p>随着Flexibility的增加，<span
+class="math inline">\(MSE_{te}\)</span>总是呈现U形，<span
+class="math inline">\(MSE_{tr}\)</span>总是呈下降趋势。这是统计学习的特性，与数据集无关。</p>
+<p>在选取最优模型的时候，不能一味地选取<span
+class="math inline">\(MSE_{tr}\)</span>小的模型，因为在模型拟合直接或间接的让<span
+class="math inline">\(MSE_{tr}\)</span>达到最小，需要使用其他方法，例如交叉验证来选择最优的模型。</p>
+<h2 id="the-bias-variance-trade-off">The Bias-Variance Trade-Off</h2>
+<p>偏差和方差可以具体解释<span
+class="math inline">\(MSE_{te}\)</span>为什么总是呈现U形，<span
+class="math inline">\(MSE_{te}\)</span>的期望可以由以下公式计算，假设我们要估计<span
+class="math inline">\(\hat{f}(x_0)\)</span> <span
+class="math display">\[
+\begin{eqnarray}   
+E\left(y_{0}-\hat{f}\left(x_{0}\right)\right)^{2}&amp;=&amp;E[(\epsilon+f(x_0)-\hat{f}(x_0))^2]     \\
+&amp;=&amp;E(\epsilon^2)+2E(\epsilon)E([f(x_0)-\hat{f}(x_0)])
++E\{[f(x_0)-\hat{f}(x_0)]^2\}\nonumber    \\
+&amp;\overset{E(\epsilon)=0}{=}&amp;Var(\epsilon)+E\{[f(x_0)-\hat{f}(x_0)]^2\}\\
+&amp;=&amp;Var(\epsilon)+f^2(x_0)-2f(x_0)E[\hat{f}(x_0)]+E[\hat{f}(x_0)^2]
+\\
+&amp;=&amp;Var(\epsilon)+E[\hat{f}(x_0)^2]-E^2[\hat{f}(x_0)]+E^2[\hat{f}(x_0)]-2f(x_0)E[\hat{f}(x_0)]+f^2(x_0)\\
+&amp;=&amp;Var(\epsilon)+VAR(\hat{f}(x_0))+[E(\hat{f}(x_0))-f(x_0)]^2\\
+&amp;\overset{E(\hat{f}(x_0))-f(x_0))=Bias(\hat{f}(x_0))}{=}&amp;Var(\epsilon)+VAR(\hat{f}(x_0))+Bias^2[\hat{f}(x_0)]
+\end{eqnarray}
+\]</span> 可以看到<span
+class="math inline">\(MSE_{te}\)</span>的期望分解为三部分,误差的方差，<span
+class="math inline">\(\hat{f}(x_0)\)</span>的方差，<span
+class="math inline">\(\hat{f}(x_0)\)</span>的偏差平方；</p>
+<ul>
+<li><span
+class="math inline">\(\hat{f}(x_0)\)</span>的方差大意味着如果训练集中的数据有小幅度的变动，那么<span
+class="math inline">\(\hat{f}(x_0)\)</span>的变化会很大</li>
+<li><span
+class="math inline">\(\hat{f}(x_0)\)</span>的偏差平方小意味着模型曲线对训练集中的数据拟合程度较高。</li>
+</ul>
+<p>通常来说，当模型的灵活度越高，方差就会增加，偏差平方就会变小；这样就可以解释为什么<span
+class="math inline">\(MSE_{te}\)</span>总是呈现U形:</p>
+<blockquote>
+<p>这种<span
+class="math inline">\(MSEte\)</span>的U型曲线的升降原因在于<span
+class="math inline">\(f\)</span>的估计量<span
+class="math inline">\(\hat{f}(x)\)</span>方差和偏差平方的变化；当灵活度增加时，VAR增加，Bias快速减少，根据公式，<span
+class="math inline">\(MSEte\)</span>减少；
+随着灵活度的再增加，Bias不在急剧减少，VAR增加，<span
+class="math inline">\(MSEte\)</span>在某个点达到最小值后开始上升，最终让<span
+class="math inline">\(MSEte\)</span>与灵活度的曲线呈U形</p>
+</blockquote>
+<div data-align="center">
+<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDI0IDI0Ij48Y2lyY2xlIGN4PSI0IiBjeT0iMTIiIHI9IjMiIGZpbGw9ImN1cnJlbnRDb2xvciI+PGFuaW1hdGUgaWQ9InN2Z1NwaW5uZXJzM0RvdHNTY2FsZTAiIGF0dHJpYnV0ZU5hbWU9InIiIGJlZ2luPSIwO3N2Z1NwaW5uZXJzM0RvdHNTY2FsZTEuZW5kLTAuMjVzIiBkdXI9IjAuNzVzIiB2YWx1ZXM9IjM7LjI7MyIvPjwvY2lyY2xlPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjMiIGZpbGw9ImN1cnJlbnRDb2xvciI+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0iciIgYmVnaW49InN2Z1NwaW5uZXJzM0RvdHNTY2FsZTAuZW5kLTAuNnMiIGR1cj0iMC43NXMiIHZhbHVlcz0iMzsuMjszIi8+PC9jaXJjbGU+PGNpcmNsZSBjeD0iMjAiIGN5PSIxMiIgcj0iMyIgZmlsbD0iY3VycmVudENvbG9yIj48YW5pbWF0ZSBpZD0ic3ZnU3Bpbm5lcnMzRG90c1NjYWxlMSIgYXR0cmlidXRlTmFtZT0iciIgYmVnaW49InN2Z1NwaW5uZXJzM0RvdHNTY2FsZTAuZW5kLTAuNDVzIiBkdXI9IjAuNzVzIiB2YWx1ZXM9IjM7LjI7MyIvPjwvY2lyY2xlPjwvc3ZnPg==" data-original="https://cdn.jsdelivr.net/gh/wilfredzoz/Picture/2025/01/image-20250117160422457-8cd788.png"  width="75%" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);border-radius:10px;"/>
+</div>
+<p>这三个图片就是不同自由度的不同的模型的<span
+class="math inline">\(MSE_{te}\)</span>
+Bias和VAR的对比图，可以看出随着自由度的增加，Bias总是先减少，VAR总是增加；但对于不同的模型，他们的减少和增加的速率不同，由于<span
+class="math inline">\(MSE_{te}\)</span>是Bias的平方和VAR还有误差的方差之和（误差的方差为常数，在图中用水平虚线表示），最终导致他们最优的<span
+class="math inline">\(MSE_{te}\)</span>(最小的<span
+class="math inline">\(MSE_{te}\)</span>)不同。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Statistical-learning/" rel="tag"># Statistical learning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/01/12/Git%E4%B8%AD%E5%90%AB%E6%9C%89%E5%A4%A7%E6%96%87%E4%BB%B6%E5%AF%BC%E8%87%B4%E4%B8%8A%E4%BC%A0%E5%A4%B1%E8%B4%A5%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" rel="prev" title="Git中含有大文件导致上传失败的解决方法">
+      <i class="fa fa-chevron-left"></i> Git中含有大文件导致上传失败的解决方法
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          目录
+        </li>
+        <li class="sidebar-nav-overview">
+          概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction-to-regression-models"><span class="nav-number">1.</span> <span class="nav-text">Introduction to Regression
+Models</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dimensionality-and-structured-models"><span class="nav-number">2.</span> <span class="nav-text">Dimensionality and
+Structured Models</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#curse-of-dimensionality"><span class="nav-number">2.1.</span> <span class="nav-text">Curse of Dimensionality</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#model-selection-and-bias-variance-trand-off"><span class="nav-number">3.</span> <span class="nav-text">Model Selection and
+Bias Variance Trand-off</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#measuring-the-quality-of-fit"><span class="nav-number">3.1.</span> <span class="nav-text">Measuring the Quality of Fit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-bias-variance-trade-off"><span class="nav-number">3.2.</span> <span class="nav-text">The Bias-Variance Trade-Off</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">wilfred</p>
+  <div class="site-description" itemprop="description">LML</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">全部</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-gamepad"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wilfred</span>
+</div>
+<!--  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div> 
+-->
+
+
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+
+
+  
+  <style>
+  
+  button.darkmode-toggle {
+  z-index: 9999;
+  }
+  
+  img, .darkmode-ignore {
+    isolation: isolate;
+    display: block;
+  }
+  </style>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/js/medium-zoom.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+  <script src="/js/darkmode-js.min.js"></script>
+
+
+<script>
+var options = {
+  bottom: '64px', // default: '32px'
+  right: 'unset', // default: '32px'
+  left: '32px', // default: 'unset'
+  time: '0.5s', // default: '0.3s'
+  mixColor: '#fff', // default: '#fff'
+  backgroundColor: '#fff',  // default: '#fff'
+  buttonColorDark: '#100f2c',  // default: '#100f2c'
+  buttonColorLight: '#fff', // default: '#fff'
+  saveInCookies: true, // default: true,
+  label: '🌓', // default: ''
+  autoMatchOsTheme: true // default: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+// window.onload = function(){
+//   setTimeout(
+//     function() {
+//       document.getElementsByClassName('darkmode-toggle')[0].click();
+//     },
+//     550,
+//   );
+//   document.getElementsByClassName('darkmode-toggle')[0].click();
+// }
+</script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('/js/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'default',
+      logLevel : 3,
+      flowchart: { curve     : 'linear'},
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+  <script src="/js/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://example.com/2025/01/15/Statistical-learning-with-Python/',]
+      });
+      });
+  </script>
+
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 2,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var a=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,d=o();function o(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(t){(a||t)&&(d=o());for(var e,i=0;i<d.length;i++)0<=(e=(e=d[i]).getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,a,n,o=d[i];e=function(){d=d.filter(function(t){return o!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(o)},(t=o).dataset.loaded||(t.hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(a=new Image,n=t.getAttribute("data-original"),a.onload=function(){t.src=n,t.removeAttribute("data-original"),t.setAttribute("data-loaded",!0),e&&e()},a.onerror=function(){t.removeAttribute("data-original"),t.setAttribute("data-loaded",!1),t.src=n},t.src!==n&&(a.src=n)))}()}function e(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",e),r.addEventListener("resize",e),r.addEventListener("orientationchange",e)}(this);</script></body>
+</html>
