@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-flash.css" rel="stylesheet">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Bungee Shade:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|LXGW WenKai Screen:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="hexo博客简易搭建流程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo+github搭建个人博客">
+<meta property="og:url" content="http://example.com/2024/06/19/hexo-github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/index.html">
+<meta property="og:site_name" content="wilfredzoz">
+<meta property="og:description" content="hexo博客简易搭建流程">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-19T14:43:50.000Z">
+<meta property="article:modified_time" content="2025-03-20T09:31:47.869Z">
+<meta property="article:author" content="wilfred">
+<meta property="article:tag" content="个人博客搭建">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/06/19/hexo-github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>hexo+github搭建个人博客 | wilfredzoz</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+  
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">wilfredzoz</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-hashtag fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-folder-open fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-list fa-fw"></i>全部</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/19/hexo-github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wilfred">
+      <meta itemprop="description" content="LML">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wilfredzoz">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          hexo+github搭建个人博客
+        </h1>
+
+        <div class="post-meta">
+		  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-06-19 14:43:50" itemprop="dateCreated datePublished" datetime="2024-06-19T14:43:50+00:00">2024-06-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-03-20 09:31:47" itemprop="dateModified" datetime="2025-03-20T09:31:47+00:00">2025-03-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">hexo博客简易搭建流程</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="创建个人博客">创建个人博客</h1>
+<h2 id="创建个人博客文件夹">创建个人博客文件夹</h2>
+<p>首先创建一个文件夹用来存放博客</p>
+<figure>
+<img
+src="https://raw.gitmirror.com/wilfredzoz/Picture/master/2024年06月19日10时59分55秒-image-20240619105947918.png"
+alt="image-20240619105947918" />
+<figcaption aria-hidden="true">image-20240619105947918</figcaption>
+</figure>
+<p>在此文件夹中右键，选择打开git base，在命令栏中输入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>最后会在这个文件夹中创建很多文件：</p>
+<figure>
+<img
+src="https://raw.gitmirror.com/wilfredzoz/Picture/master/2024年06月19日11时03分23秒-image-20240619110323650.png"
+alt="image-20240619110323650" />
+<figcaption aria-hidden="true">image-20240619110323650</figcaption>
+</figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">├── _config.yml  网站的配置信息。可以在此配置大部分的参数。</span><br><span class="line">├── .gitignore   用于Git版本控制时忽略指定文件或目录。</span><br><span class="line">├── package.json 应用程序的信息。EJS,Stylus和Markdown渲染引擎已默认安装。</span><br><span class="line">├── .github      GitHub特定的配置文件夹。</span><br><span class="line">├── node_modules Node.js依赖模块存放目录。你通常不用关心这个。</span><br><span class="line">├── scaffolds    模版文件夹。新建文章时Hexo会根据scaffold来创建文件。</span><br><span class="line">├── source       资源文件夹是存放用户资源的地方。除_posts之外，开头命名为_(下划线)的文件/文件夹和隐藏的文件均会被忽略。</span><br><span class="line">|   └── _posts   存放博客文章的文件夹。</span><br><span class="line">└── themes       主题文件夹。Hexo会根据主题来生成静态页面。</span><br></pre></td></tr></table></figure>
+<p>接下来在git中输入：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate </span><br><span class="line">或者简写为：</span><br><span class="line">$ hexo g</span><br></pre></td></tr></table></figure>
+<p>生成public站点文件夹</p>
+<figure>
+<img
+src="https://raw.gitmirror.com/wilfredzoz/Picture/master/2024年06月19日11时02分59秒-image-20240619110259330.png"
+alt="image-20240619110259330" />
+<figcaption aria-hidden="true">image-20240619110259330</figcaption>
+</figure>
+<p>通过下面命令启动本地服务器：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br><span class="line">或者简写为：</span><br><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
+<figure>
+<img
+src="https://raw.gitmirror.com/wilfredzoz/Picture/master/2024年06月19日11时04分08秒-image-20240619110408337.png"
+alt="image-20240619110408337" />
+<figcaption aria-hidden="true">image-20240619110408337</figcaption>
+</figure>
+<p>不要ctrl+左键点击命令框中的链接，直接在浏览器中输入：<code>localhost:4000</code>即可进入网站：</p>
+<figure>
+<img
+src="https://raw.gitmirror.com/wilfredzoz/Picture/master/2024年06月19日11时05分28秒-image-20240619110528406.png"
+alt="image-20240619110528406" />
+<figcaption aria-hidden="true">image-20240619110528406</figcaption>
+</figure>
+<h2 id="将个人博客文件夹加入github">将个人博客文件夹加入github</h2>
+<p>在github中创建一个新的公开资料库</p>
+<p>名字规则为：<img
+src="https://raw.gitmirror.com/wilfredzoz/Picture/master/2024年06月19日13时53分55秒-image-20240619135355118.png"
+alt="image-20240619135355118" /></p>
+<p><strong>（注意不要选add
+readme，这样会将默认分支改为main，在hexo中默认分支为master）</strong></p>
+<figure>
+<img
+src="https://raw.gitmirror.com/wilfredzoz/Picture/master/2024年06月19日13时54分29秒-image-20240619135428975.png"
+alt="image-20240619135428975" />
+<figcaption aria-hidden="true">image-20240619135428975</figcaption>
+</figure>
+<p>记住该地址</p>
+<h2
+id="之前可能连接过生成ssh将github与git相连接">（之前可能连接过）生成SSH将github与git相连接*</h2>
+<p>在git base中输入：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git config --<span class="variable language_">global</span> user.<span class="property">name</span> yourname</span><br><span class="line">git config --<span class="variable language_">global</span> user.<span class="property">email</span> youremail</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;youremail&quot;</span></span><br></pre></td></tr></table></figure>
+<p>会生成一个<code>.ssh</code>文件</p>
+<figure>
+<img
+src="https://raw.gitmirror.com/wilfredzoz/Picture/master/2024年06月19日13时57分18秒-image-20240619135718667.png"
+alt="image-20240619135718667" />
+<figcaption aria-hidden="true">image-20240619135718667</figcaption>
+</figure>
+<p>在该目录下有一个<code>id_rsa.pub</code>文件，复制其中的内容到：</p>
+<p><code>gitthub</code>-<code>settings-SSH and GPG keys</code>-<code>New SSH key</code>-<code>Add new SSH Key</code>的<code>Key</code>中,Title随便写一个</p>
+<figure>
+<img
+src="https://raw.gitmirror.com/wilfredzoz/Picture/master/2024年06月19日13时59分09秒-image-20240619135909717.png"
+alt="image-20240619135909717" />
+<figcaption aria-hidden="true">image-20240619135909717</figcaption>
+</figure>
+<figure>
+<img
+src="https://raw.gitmirror.com/wilfredzoz/Picture/master/2024年06月19日13时59分30秒-image-20240619135930187.png"
+alt="image-20240619135930187" />
+<figcaption aria-hidden="true">image-20240619135930187</figcaption>
+</figure>
+<h2 id="测试git是否连接github">测试git是否连接github</h2>
+<p>git base输入：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.<span class="property">com</span></span><br></pre></td></tr></table></figure>
+<p>出现下图表示连接成功</p>
+<figure>
+<img
+src="https://raw.gitmirror.com/wilfredzoz/Picture/master/2024年06月19日14时01分30秒-image-20240619140129995.png"
+alt="image-20240619140129995" />
+<figcaption aria-hidden="true">image-20240619140129995</figcaption>
+</figure>
+<h2 id="部署hexo">部署hexo</h2>
+<p>使用编辑器打开由</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+<p>生成的配置文件<code>_config.yml</code>，翻到最下面，将下面改为</p>
+<figure>
+<img
+src="https://raw.gitmirror.com/wilfredzoz/Picture/master/2024年06月19日14时03分40秒-image-20240619140339951.png"
+alt="image-20240619140339951" />
+<figcaption aria-hidden="true">image-20240619140339951</figcaption>
+</figure>
+<p>注意这里的<code>branch</code>，如果在github没有设置默认<code>branch</code>为<code>main</code>的话，这里就保持不变</p>
+<h2 id="安装deploy-git">安装deploy-git</h2>
+<p>在git base使用命令：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+<h2 id="编辑博客">编辑博客</h2>
+<p>在博客文件夹打开git base输入：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo n <span class="string">&quot;文件名&quot;</span></span><br></pre></td></tr></table></figure>
+<p>在<code>H:\Blog\source\_posts</code>文件夹中会创建一个<code>"文件名".md</code>的文件</p>
+<figure>
+<img
+src="https://raw.gitmirror.com/wilfredzoz/Picture/master/2024年06月19日14时07分33秒-image-20240619140733905.png"
+alt="image-20240619140733905" />
+<figcaption aria-hidden="true">image-20240619140733905</figcaption>
+</figure>
+<figure>
+<img
+src="https://raw.gitmirror.com/wilfredzoz/Picture/master/2024年06月19日14时07分58秒-image-20240619140757991.png"
+alt="image-20240619140757991" />
+<figcaption aria-hidden="true">image-20240619140757991</figcaption>
+</figure>
+<p>使用md编辑器打开文件进行编辑：</p>
+<figure>
+<img
+src="https://raw.gitmirror.com/wilfredzoz/Picture/master/2024年06月19日14时09分49秒-image-20240619140949710.png"
+alt="image-20240619140949710" />
+<figcaption aria-hidden="true">image-20240619140949710</figcaption>
+</figure>
+<p>编辑好之后保存</p>
+<h2 id="推送博客">推送博客</h2>
+<p>在博客文件夹git base分别输入：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+<p>文章就会同步到github资料库，并且在网站<code>wilfredzoz.github.io</code>进推送</p>
+<p>有时候<code>hexo d</code>会失败，不知道咋搞的，有时候又可以，怀疑是不是梯子的问题</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag"># 个人博客搭建</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2024/06/19/%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5github-com%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3/" rel="next" title="无法连接github.com错误解决">
+      无法连接github.com错误解决 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          目录
+        </li>
+        <li class="sidebar-nav-overview">
+          概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2"><span class="nav-number">1.</span> <span class="nav-text">创建个人博客</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">1.1.</span> <span class="nav-text">创建个人博客文件夹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%96%87%E4%BB%B6%E5%A4%B9%E5%8A%A0%E5%85%A5github"><span class="nav-number">1.2.</span> <span class="nav-text">将个人博客文件夹加入github</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%8B%E5%89%8D%E5%8F%AF%E8%83%BD%E8%BF%9E%E6%8E%A5%E8%BF%87%E7%94%9F%E6%88%90ssh%E5%B0%86github%E4%B8%8Egit%E7%9B%B8%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.3.</span> <span class="nav-text">（之前可能连接过）生成SSH将github与git相连接*</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95git%E6%98%AF%E5%90%A6%E8%BF%9E%E6%8E%A5github"><span class="nav-number">1.4.</span> <span class="nav-text">测试git是否连接github</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2hexo"><span class="nav-number">1.5.</span> <span class="nav-text">部署hexo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85deploy-git"><span class="nav-number">1.6.</span> <span class="nav-text">安装deploy-git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E5%8D%9A%E5%AE%A2"><span class="nav-number">1.7.</span> <span class="nav-text">编辑博客</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E9%80%81%E5%8D%9A%E5%AE%A2"><span class="nav-number">1.8.</span> <span class="nav-text">推送博客</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">wilfred</p>
+  <div class="site-description" itemprop="description">LML</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">全部</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-gamepad"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wilfred</span>
+</div>
+<!--  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div> 
+-->
+
+
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+
+
+  
+  <style>
+  
+  button.darkmode-toggle {
+  z-index: 9999;
+  }
+  
+  img, .darkmode-ignore {
+    isolation: isolate;
+    display: block;
+  }
+  </style>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/js/medium-zoom.min.js"></script>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+  <script src="/js/darkmode-js.min.js"></script>
+
+
+<script>
+var options = {
+  bottom: '64px', // default: '32px'
+  right: 'unset', // default: '32px'
+  left: '32px', // default: 'unset'
+  time: '0.5s', // default: '0.3s'
+  mixColor: '#fff', // default: '#fff'
+  backgroundColor: '#fff',  // default: '#fff'
+  buttonColorDark: '#100f2c',  // default: '#100f2c'
+  buttonColorLight: '#fff', // default: '#fff'
+  saveInCookies: true, // default: true,
+  label: '🌓', // default: ''
+  autoMatchOsTheme: true // default: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+// window.onload = function(){
+//   setTimeout(
+//     function() {
+//       document.getElementsByClassName('darkmode-toggle')[0].click();
+//     },
+//     550,
+//   );
+//   document.getElementsByClassName('darkmode-toggle')[0].click();
+// }
+</script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+// 在最后添加
+<script src="/js/code-unfold.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('/js/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'default',
+      logLevel : 3,
+      flowchart: { curve     : 'linear'},
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+
+  
+
+  
+
+  
+  <script src="/js/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://example.com/2024/06/19/hexo-github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/',]
+      });
+      });
+  </script>
+
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 2,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var a=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,d=o();function o(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(t){(a||t)&&(d=o());for(var e,i=0;i<d.length;i++)0<=(e=(e=d[i]).getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,a,n,o=d[i];e=function(){d=d.filter(function(t){return o!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(o)},(t=o).dataset.loaded||(t.hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(a=new Image,n=t.getAttribute("data-original"),a.onload=function(){t.src=n,t.removeAttribute("data-original"),t.setAttribute("data-loaded",!0),e&&e()},a.onerror=function(){t.removeAttribute("data-original"),t.setAttribute("data-loaded",!1),t.src=n},t.src!==n&&(a.src=n)))}()}function e(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",e),r.addEventListener("resize",e),r.addEventListener("orientationchange",e)}(this);</script></body>
+</html>

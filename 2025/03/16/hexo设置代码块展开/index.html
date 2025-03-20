@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-flash.css" rel="stylesheet">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Bungee Shade:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|LXGW WenKai Screen:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="hexo设置将过长的代码块代折叠">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo设置代码块折叠">
+<meta property="og:url" content="http://example.com/2025/03/16/hexo%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%A0%81%E5%9D%97%E5%B1%95%E5%BC%80/index.html">
+<meta property="og:site_name" content="wilfredzoz">
+<meta property="og:description" content="hexo设置将过长的代码块代折叠">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wilfredzoz/Picture/2025/03/image-20250316114934480-3c1ab3.png">
+<meta property="article:published_time" content="2025-03-16T11:35:45.000Z">
+<meta property="article:modified_time" content="2025-03-20T09:31:47.869Z">
+<meta property="article:author" content="wilfred">
+<meta property="article:tag" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wilfredzoz/Picture/2025/03/image-20250316114934480-3c1ab3.png">
+
+<link rel="canonical" href="http://example.com/2025/03/16/hexo%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%A0%81%E5%9D%97%E5%B1%95%E5%BC%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>hexo设置代码块折叠 | wilfredzoz</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+  
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">wilfredzoz</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-hashtag fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-folder-open fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-list fa-fw"></i>全部</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/16/hexo%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%A0%81%E5%9D%97%E5%B1%95%E5%BC%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wilfred">
+      <meta itemprop="description" content="LML">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wilfredzoz">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          hexo设置代码块折叠
+        </h1>
+
+        <div class="post-meta">
+		  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-03-16 11:35:45" itemprop="dateCreated datePublished" datetime="2025-03-16T11:35:45+00:00">2025-03-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-03-20 09:31:47" itemprop="dateModified" datetime="2025-03-20T09:31:47+00:00">2025-03-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">hexo设置将过长的代码块代折叠</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="添加-code-unfold.js">添加 code-unfold.js</h1>
+<p>按照下面的内容，创建<code>code-unfold.js</code>文件，放置在<code>themes/next/source/js/code-unfold.js</code>中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="variable constant_">CODE_MAX_HEIGHT</span> = <span class="number">400</span>;</span><br><span class="line"><span class="keyword">var</span> containers = [];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 展开</span></span><br><span class="line">$(<span class="string">&#x27;body&#x27;</span>).<span class="title function_">on</span>(<span class="string">&#x27;click&#x27;</span>, <span class="string">&#x27;.js_unfold_code_btn&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  $(<span class="variable language_">this</span>).<span class="title function_">closest</span>(<span class="string">&#x27;.js_highlight_container&#x27;</span>).<span class="title function_">addClass</span>(<span class="string">&#x27;on&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 收起</span></span><br><span class="line">$(<span class="string">&#x27;body&#x27;</span>).<span class="title function_">on</span>(<span class="string">&#x27;click&#x27;</span>, <span class="string">&#x27;.js_retract_code_btn&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> $container = $(<span class="variable language_">this</span>).<span class="title function_">closest</span>(<span class="string">&#x27;.js_highlight_container&#x27;</span>).<span class="title function_">removeClass</span>(<span class="string">&#x27;on&#x27;</span>);</span><br><span class="line">  <span class="keyword">var</span> winTop = $(<span class="variable language_">window</span>).<span class="title function_">scrollTop</span>();</span><br><span class="line">  <span class="keyword">var</span> offsetTop = $container.<span class="title function_">offset</span>().<span class="property">top</span>;</span><br><span class="line">  $(<span class="variable language_">this</span>).<span class="title function_">css</span>(<span class="string">&#x27;top&#x27;</span>, <span class="number">0</span>);</span><br><span class="line">  <span class="keyword">if</span> (winTop &gt; offsetTop) &#123;</span><br><span class="line">    <span class="comment">// 设置滚动条位置</span></span><br><span class="line">    $(<span class="string">&#x27;body, html&#x27;</span>).<span class="title function_">animate</span>(&#123;</span><br><span class="line">      <span class="attr">scrollTop</span>: $container.<span class="title function_">offset</span>().<span class="property">top</span> - <span class="variable constant_">CODE_MAX_HEIGHT</span></span><br><span class="line">    &#125;, <span class="number">600</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 滚动事件，触发动画效果</span></span><br><span class="line">$(<span class="variable language_">window</span>).<span class="title function_">on</span>(<span class="string">&#x27;scroll&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> scrollTop = $(<span class="variable language_">window</span>).<span class="title function_">scrollTop</span>();</span><br><span class="line">  <span class="keyword">var</span> temp = [];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; containers.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> item = containers[i];</span><br><span class="line">    <span class="keyword">var</span> &#123; $container, height, $hide, hasHorizontalScrollbar &#125; = item;</span><br><span class="line">    <span class="keyword">if</span> ($container.<span class="title function_">closest</span>(<span class="string">&#x27;body&#x27;</span>).<span class="property">length</span> === <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="comment">// 如果 $container 元素已经不在页面上, 则删除该元素</span></span><br><span class="line">      <span class="comment">// 防止pjax页面跳转之后，元素未删除</span></span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    temp.<span class="title function_">push</span>(item);</span><br><span class="line">    <span class="keyword">if</span> (!$container.<span class="title function_">hasClass</span>(<span class="string">&#x27;on&#x27;</span>)) &#123;</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> offsetTop = $container.<span class="title function_">offset</span>().<span class="property">top</span>;</span><br><span class="line">    <span class="keyword">var</span> hideBtnHeight = $hide.<span class="title function_">outerHeight</span>();</span><br><span class="line">    <span class="comment">// 减去按钮高度，减去底部滚动条高度</span></span><br><span class="line">    <span class="keyword">var</span> maxTop = <span class="built_in">parseInt</span>(height - (hasHorizontalScrollbar ? <span class="number">17</span> : <span class="number">0</span>) - hideBtnHeight);</span><br><span class="line">    <span class="keyword">let</span> top = <span class="built_in">parseInt</span>(</span><br><span class="line">      <span class="title class_">Math</span>.<span class="title function_">min</span>(</span><br><span class="line">        <span class="title class_">Math</span>.<span class="title function_">max</span>(scrollTop - offsetTop, <span class="number">0</span>), <span class="comment">// 如果小于 0 ，则取 0</span></span><br><span class="line">        maxTop,<span class="comment">// 如果大于 height ，则取 height</span></span><br><span class="line">      )</span><br><span class="line">    );</span><br><span class="line">    <span class="comment">// 根据 sin 曲线设置&quot;收起代码&quot;位置</span></span><br><span class="line">    <span class="keyword">var</span> halfHeight = <span class="built_in">parseInt</span>($(<span class="variable language_">window</span>).<span class="title function_">height</span>() / <span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">sin</span>((top / maxTop) * <span class="number">90</span> * (<span class="number">2</span> * <span class="title class_">Math</span>.<span class="property">PI</span>/<span class="number">360</span>)));</span><br><span class="line">    $hide.<span class="title function_">css</span>(<span class="string">&#x27;top&#x27;</span>, <span class="title class_">Math</span>.<span class="title function_">min</span>(top + halfHeight, maxTop));</span><br><span class="line">  &#125;</span><br><span class="line">  containers = temp;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加隐藏容器</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">addCodeWrap</span>(<span class="params">$node</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> $container = $node.<span class="title function_">wrap</span>(<span class="string">&#x27;&lt;div class=&quot;js_highlight_container highlight-container&quot;&gt;&lt;div class=&quot;highlight-wrap&quot;&gt;&lt;/div&gt;&lt;/div&gt;&#x27;</span>).<span class="title function_">closest</span>(<span class="string">&#x27;.js_highlight_container&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 底部 &quot;展开代码&quot; 与 侧边栏 &quot;收起代码&quot;</span></span><br><span class="line">  <span class="keyword">var</span> $btn = $(<span class="string">`</span></span><br><span class="line"><span class="string">    &lt;div class=&quot;highlight-footer&quot;&gt;</span></span><br><span class="line"><span class="string">      &lt;a class=&quot;js_unfold_code_btn show-btn&quot; href=&quot;javascript:;&quot;&gt;展开代码&lt;i class=&quot;fa fa-angle-down&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/a&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">    &lt;a class=&quot;js_retract_code_btn hide-btn&quot; href=&quot;javascript:;&quot;&gt;&lt;i class=&quot;fa fa-angle-up&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;收起代码&lt;/a&gt;</span></span><br><span class="line"><span class="string">  `</span>);</span><br><span class="line"></span><br><span class="line">  $container.<span class="title function_">append</span>($btn);</span><br><span class="line">  <span class="keyword">return</span> $container;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">codeUnfold</span> () &#123;</span><br><span class="line">  $(<span class="string">&#x27;.highlight&#x27;</span>).<span class="title function_">each</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// 防止重复渲染</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">__render__</span> === <span class="literal">true</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">__render__</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">var</span> $this = $(<span class="variable language_">this</span>);</span><br><span class="line">    <span class="keyword">var</span> height = $(<span class="variable language_">this</span>).<span class="title function_">outerHeight</span>();</span><br><span class="line">    <span class="keyword">if</span> (height &gt; <span class="variable constant_">CODE_MAX_HEIGHT</span>) &#123;</span><br><span class="line">      <span class="comment">// 添加展开&amp;收起容器</span></span><br><span class="line">      <span class="keyword">var</span> $container = <span class="title function_">addCodeWrap</span>($this, height);</span><br><span class="line">      containers.<span class="title function_">push</span>(&#123;</span><br><span class="line">        $container,</span><br><span class="line">        height,</span><br><span class="line">        <span class="attr">$hide</span>: $container.<span class="title function_">find</span>(<span class="string">&#x27;.js_retract_code_btn&#x27;</span>),</span><br><span class="line">        <span class="attr">hasHorizontalScrollbar</span>: <span class="variable language_">this</span>.<span class="property">scrollWidth</span> &gt; <span class="variable language_">this</span>.<span class="property">offsetWidth</span>,</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="引用-code-unfold.js">引用 code-unfold.js</h1>
+<p>修改文件<code>themes/next/layout/_scripts/index.swig</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 在最后添加  </span><br><span class="line">&#123;&#123;- next_js(<span class="string">&#x27;code-unfold.js&#x27;</span>) &#125;&#125;  </span><br></pre></td></tr></table></figure>
+<p>找到文件<code>themes/next/source/js/next-boot.js</code>，添加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">NexT</span>.<span class="property">boot</span>.<span class="property">refresh</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;  </span><br><span class="line">  <span class="comment">// 添加一行代码  </span></span><br><span class="line">  <span class="title function_">codeUnfold</span>()  </span><br><span class="line">    </span><br><span class="line">  <span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<h1 id="添加样式">添加样式</h1>
+<p>按照以下内容，创建<code>theme/next/source/css/_common/components/highlight.styl</code>文件</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 展开收起效果</span></span><br><span class="line">.highlight<span class="operator">-</span>container</span><br><span class="line">  position: relative</span><br><span class="line">  background<span class="operator">-</span>color: highlight<span class="operator">-</span>background</span><br><span class="line">  <span class="operator">&amp;</span>.on</span><br><span class="line">    .highlight<span class="operator">-</span>footer</span><br><span class="line">      display: none</span><br><span class="line">    .hide<span class="operator">-</span>btn</span><br><span class="line">      display: flex</span><br><span class="line">    .highlight<span class="operator">-</span>wrap</span><br><span class="line">      max<span class="operator">-</span>height: none</span><br><span class="line">  .highlight<span class="operator">-</span>wrap</span><br><span class="line">    overflow: hidden</span><br><span class="line">    max<span class="operator">-</span>height: 200px</span><br><span class="line">  .highlight<span class="operator">-</span>footer</span><br><span class="line">    position absolute</span><br><span class="line">    width: <span class="number">100</span><span class="operator">%</span></span><br><span class="line">    left: <span class="number">0</span></span><br><span class="line">    bottom: <span class="number">0</span></span><br><span class="line">    height: 60px</span><br><span class="line">    background<span class="operator">-</span>image: &#x27;linear<span class="operator">-</span>gradient(<span class="operator">-</span>180deg, rgba(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>,<span class="number">0</span>) <span class="number">0</span><span class="operator">%</span>, <span class="operator">%</span>s <span class="number">65</span><span class="operator">%</span>)&#x27; <span class="operator">%</span> highlight<span class="operator">-</span>background;</span><br><span class="line">    text<span class="operator">-</span>align: center</span><br><span class="line">  .show<span class="operator">-</span>btn</span><br><span class="line">    font<span class="operator">-</span>size: 12px</span><br><span class="line">    color: #fff</span><br><span class="line">    position: absolute</span><br><span class="line">    left: <span class="number">50</span><span class="operator">%</span></span><br><span class="line">    transform: translateX(<span class="operator">-</span><span class="number">50</span><span class="operator">%</span>)</span><br><span class="line">    bottom: <span class="number">0</span></span><br><span class="line">    line<span class="operator">-</span>height: 2em</span><br><span class="line">    text<span class="operator">-</span>decoration: none</span><br><span class="line">    padding: <span class="number">0</span> <span class="number">0</span>.8em</span><br><span class="line">    text<span class="operator">-</span>align: center</span><br><span class="line">    border<span class="operator">-</span>radius: 4px 4px <span class="number">0</span></span><br><span class="line">    <span class="operator">&amp;</span>:hover</span><br><span class="line">      text<span class="operator">-</span>decoration: none</span><br><span class="line">  .hide<span class="operator">-</span>btn</span><br><span class="line">    color: #fff</span><br><span class="line">    font<span class="operator">-</span>size: 12px</span><br><span class="line">    width: 22px</span><br><span class="line">    position: absolute</span><br><span class="line">    left: <span class="operator">-</span>21px</span><br><span class="line">    top: <span class="number">0</span></span><br><span class="line">    line<span class="operator">-</span>height: 1em</span><br><span class="line">    text<span class="operator">-</span>decoration: none</span><br><span class="line">    text<span class="operator">-</span>align: center</span><br><span class="line">    display: none</span><br><span class="line">    flex<span class="operator">-</span>direction: column</span><br><span class="line">    background<span class="operator">-</span>color: highlight<span class="operator">-</span>background</span><br><span class="line">    border<span class="operator">-</span>radius: 4px <span class="number">0</span> <span class="number">0</span> 4px</span><br><span class="line">    padding: <span class="number">0</span>.1em <span class="number">0</span> <span class="number">0</span>.6em</span><br><span class="line">    transition: top ease <span class="number">0</span>.35s</span><br><span class="line">  .fa<span class="operator">-</span>angle<span class="operator">-</span>up,</span><br><span class="line">  .fa<span class="operator">-</span>angle<span class="operator">-</span>down</span><br><span class="line">    font<span class="operator">-</span>style: normal</span><br><span class="line">    color: #fff</span><br><span class="line">  .fa<span class="operator">-</span>angle<span class="operator">-</span>up:before</span><br><span class="line">    content:<span class="string">&quot;\f106&quot;</span></span><br><span class="line">  .fa<span class="operator">-</span>angle<span class="operator">-</span>down:before</span><br><span class="line">    content:<span class="string">&quot;\f107&quot;</span></span><br><span class="line">    margin<span class="operator">-</span>left: <span class="number">0</span>.5em</span><br><span class="line">  .js_unfold_code_btn, .js_retract_code_btn</span><br><span class="line">    background: rgba(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.5</span>)</span><br><span class="line">    border<span class="operator">-</span>bottom: none <span class="operator">!</span>important</span><br><span class="line">    <span class="operator">&amp;</span>:hover</span><br><span class="line">      border<span class="operator">-</span>bottom<span class="operator">-</span>color: none <span class="operator">!</span>important</span><br></pre></td></tr></table></figure>
+<h1 id="引用样式">引用样式</h1>
+<p>找到文件
+<code>themes/next/source/css/_common/components/components.styl</code>修改：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@import</span> <span class="string">&#x27;post&#x27;</span>;</span><br><span class="line"><span class="meta">@import</span> <span class="string">&#x27;pages&#x27;</span>;</span><br><span class="line"><span class="meta">@import</span> <span class="string">&#x27;third-party&#x27;</span>;</span><br><span class="line"><span class="comment">// 添加这一行，不要加分号！！</span></span><br><span class="line"><span class="meta">@import</span> <span class="string">&#x27;highlight&#x27;</span></span><br></pre></td></tr></table></figure>
+<h1 id="打开-jquery">打开 jquery</h1>
+<p>文章中或要打开<code>fancybox</code>就可以打开<code>jquery</code>，但是fancybox会和lazyload冲突；所以在vendors中设置打开mediumzoom的同时打开jquery，找到<code>themes\next\layout\_scripts\vendors.swig</code>，添加</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="operator">%-</span> <span class="keyword">if</span> theme.mediumzoom <span class="operator">%</span>&#125;</span><br><span class="line">  &#123;<span class="operator">%-</span> <span class="keyword">set</span> js_vendors <span class="operator">=</span> js_vendors <span class="operator">|</span> attr(&#x27;mediumzoom&#x27;, &#x27;<span class="regexp">/js/</span>medium<span class="operator">-</span>zoom.min.js&#x27;) <span class="operator">%</span>&#125;</span><br><span class="line"><span class="comment">// 添加</span></span><br><span class="line">  &#123;<span class="operator">%-</span> <span class="keyword">set</span> js_vendors <span class="operator">=</span> js_vendors <span class="operator">|</span> attr(&#x27;jquery&#x27;, &#x27;<span class="regexp">/js/</span>jquery.min.js&#x27;) <span class="operator">%</span>&#125;</span><br><span class="line">&#123;<span class="operator">%-</span> endif <span class="operator">%</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>保存文件</p>
+<p>接着进行hexo-clean；hexo-g即可成功部署</p>
+<div data-align="center">
+<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDI0IDI0Ij48Y2lyY2xlIGN4PSI0IiBjeT0iMTIiIHI9IjMiIGZpbGw9ImN1cnJlbnRDb2xvciI+PGFuaW1hdGUgaWQ9InN2Z1NwaW5uZXJzM0RvdHNTY2FsZTAiIGF0dHJpYnV0ZU5hbWU9InIiIGJlZ2luPSIwO3N2Z1NwaW5uZXJzM0RvdHNTY2FsZTEuZW5kLTAuMjVzIiBkdXI9IjAuNzVzIiB2YWx1ZXM9IjM7LjI7MyIvPjwvY2lyY2xlPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjMiIGZpbGw9ImN1cnJlbnRDb2xvciI+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0iciIgYmVnaW49InN2Z1NwaW5uZXJzM0RvdHNTY2FsZTAuZW5kLTAuNnMiIGR1cj0iMC43NXMiIHZhbHVlcz0iMzsuMjszIi8+PC9jaXJjbGU+PGNpcmNsZSBjeD0iMjAiIGN5PSIxMiIgcj0iMyIgZmlsbD0iY3VycmVudENvbG9yIj48YW5pbWF0ZSBpZD0ic3ZnU3Bpbm5lcnMzRG90c1NjYWxlMSIgYXR0cmlidXRlTmFtZT0iciIgYmVnaW49InN2Z1NwaW5uZXJzM0RvdHNTY2FsZTAuZW5kLTAuNDVzIiBkdXI9IjAuNzVzIiB2YWx1ZXM9IjM7LjI7MyIvPjwvY2lyY2xlPjwvc3ZnPg==" data-original="https://cdn.jsdelivr.net/gh/wilfredzoz/Picture/2025/03/image-20250316114934480-3c1ab3.png"  width="75%" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);border-radius:10px;"/>
+</div>
+<p>可在<code>themes/next/source/js/code-unfold.js</code>中设置<code>CODE_MAX_HEIGHT</code>的大小来决定超过多长的代码块需要进行折叠</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/01/15/Statistical-learning-with-Python/" rel="prev" title="Statistical learning with Python">
+      <i class="fa fa-chevron-left"></i> Statistical learning with Python
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          目录
+        </li>
+        <li class="sidebar-nav-overview">
+          概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0-code-unfold.js"><span class="nav-number">1.</span> <span class="nav-text">添加 code-unfold.js</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E7%94%A8-code-unfold.js"><span class="nav-number">2.</span> <span class="nav-text">引用 code-unfold.js</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%A0%B7%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">添加样式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E6%A0%B7%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">引用样式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%93%E5%BC%80-jquery"><span class="nav-number">5.</span> <span class="nav-text">打开 jquery</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">wilfred</p>
+  <div class="site-description" itemprop="description">LML</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">全部</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-gamepad"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wilfred</span>
+</div>
+<!--  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div> 
+-->
+
+
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+
+
+  
+  <style>
+  
+  button.darkmode-toggle {
+  z-index: 9999;
+  }
+  
+  img, .darkmode-ignore {
+    isolation: isolate;
+    display: block;
+  }
+  </style>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/js/medium-zoom.min.js"></script>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+  <script src="/js/darkmode-js.min.js"></script>
+
+
+<script>
+var options = {
+  bottom: '64px', // default: '32px'
+  right: 'unset', // default: '32px'
+  left: '32px', // default: 'unset'
+  time: '0.5s', // default: '0.3s'
+  mixColor: '#fff', // default: '#fff'
+  backgroundColor: '#fff',  // default: '#fff'
+  buttonColorDark: '#100f2c',  // default: '#100f2c'
+  buttonColorLight: '#fff', // default: '#fff'
+  saveInCookies: true, // default: true,
+  label: '🌓', // default: ''
+  autoMatchOsTheme: true // default: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+// window.onload = function(){
+//   setTimeout(
+//     function() {
+//       document.getElementsByClassName('darkmode-toggle')[0].click();
+//     },
+//     550,
+//   );
+//   document.getElementsByClassName('darkmode-toggle')[0].click();
+// }
+</script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+// 在最后添加
+<script src="/js/code-unfold.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('/js/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'default',
+      logLevel : 3,
+      flowchart: { curve     : 'linear'},
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+  <script src="/js/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://example.com/2025/03/16/hexo%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%A0%81%E5%9D%97%E5%B1%95%E5%BC%80/',]
+      });
+      });
+  </script>
+
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 2,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var a=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,d=o();function o(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(t){(a||t)&&(d=o());for(var e,i=0;i<d.length;i++)0<=(e=(e=d[i]).getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,a,n,o=d[i];e=function(){d=d.filter(function(t){return o!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(o)},(t=o).dataset.loaded||(t.hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(a=new Image,n=t.getAttribute("data-original"),a.onload=function(){t.src=n,t.removeAttribute("data-original"),t.setAttribute("data-loaded",!0),e&&e()},a.onerror=function(){t.removeAttribute("data-original"),t.setAttribute("data-loaded",!1),t.src=n},t.src!==n&&(a.src=n)))}()}function e(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",e),r.addEventListener("resize",e),r.addEventListener("orientationchange",e)}(this);</script></body>
+</html>
